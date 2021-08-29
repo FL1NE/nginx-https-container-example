@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  https-portal:
+    image: steveltn/https-portal:latest
+    container_name: https-portal
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - nginx-website
+    restart: always
+    environment:
+      DOMAINS: 'example.com -> http://nginx-website:80'
+      # STAGE: 'production'  #テスト時はコメントアウト推奨
+
+  nginx-website:
+    image: nginx-website
+    container_name: nginx-website
+    restart: always
